@@ -1,4 +1,6 @@
-﻿//Console.WriteLine("Hello, World!");
+﻿record Enrollment(string StudentId, string CourseCode, DateTime EnrolledAt);
+
+//Console.WriteLine("Hello, World!");
 
 // string? region = null;
 
@@ -36,13 +38,39 @@
 // Console.WriteLine($"Total allocated (decimal): {totalAllocation}");
 // Console.WriteLine($"Total allocated (formatted): {totalAllocation:F2}");
 
-var enrollment = new Enrollment("STU-001", "CS-401", DateTime.UtcNow);
-Console.WriteLine(enrollment);
-var corrected = enrollment with { CourseCode = "CS-402" };
-Console.WriteLine(corrected);
-// Value equality — two records with the same data are equal
-var duplicate = new Enrollment("STU-001", "CS-401", enrollment.EnrolledAt);
-Console.WriteLine($"Same data? {enrollment == duplicate}"); // True
+class Program
+{
+  static void Main()
+  {
+    var enrollment = new Enrollment("STU-001", "CS-401", DateTime.UtcNow);
+    Console.WriteLine(enrollment);
+    var corrected = enrollment with { CourseCode = "CS-402" };
+    Console.WriteLine(corrected);
+    // Value equality — two records with the same data are equal
+    var duplicate = new Enrollment("STU-001", "CS-401", enrollment.EnrolledAt);
+    Console.WriteLine($"Same data? {enrollment == duplicate}"); // True
 
-record Enrollment(string StudentId, string CourseCode, DateTime EnrolledAt);
+    //Exercise 3 - p2
 
+    var course = new Course { Code = "CS-401", Title = "Advanced C#", Capacity = 30 };
+    Console.WriteLine($"Course: {course.Title} (Capacity: {course.Capacity})");
+    // Invalid capacity — should throw
+    try
+    {
+      course.Capacity = -5;
+    }
+    catch (ArgumentOutOfRangeException ex)
+    {
+      Console.WriteLine($"Caught: {ex.Message}");
+    }
+    // Invalid title — should throw
+    try
+    {
+      course.Title = "";
+    }
+    catch (ArgumentException ex)
+    {
+      Console.WriteLine($"Caught: {ex.Message}");
+    }
+  }
+}
