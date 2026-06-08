@@ -1,2 +1,5 @@
-TMSCORE/bin
-TMSCORE/obj
+bin/
+obj/
+*.user
+*.suo 
+*.js
