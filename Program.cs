@@ -85,6 +85,38 @@
     }
   }
 
+  interface IGradable
+  {
+    string Title { get; init; }
+    decimal CalculateGrade();
+  }
+
+  class Quiz : IGradable
+  {
+    public string Title { get; init; } = string.Empty;
+    public int CorrectAnswers { get; init; }
+    public int TotalQuestions { get; init; }
+
+    public decimal CalculateGrade()
+    {
+      if (TotalQuestions <= 0)
+        return 0m;
+      return (decimal)CorrectAnswers / TotalQuestions * 100m;
+    }
+  }
+
+  class Labassignment : IGradable
+  {
+    public string Title { get; init; } = string.Empty;
+    public decimal FunctionalityScore { get; init; }
+    public decimal CodeQualityScore { get; init; }
+
+    public decimal CalculateGrade()
+    {
+      return (FunctionalityScore + CodeQualityScore) / 2m;
+    }
+  }
+
   class Program
   {
     static void Main()
@@ -122,6 +154,22 @@
       // ex3-p3
       var s = new Student("S1", "Abeba") { Age = 20, GPA = 3.8m };
       Console.WriteLine($"Student: {s.Name}, GPA: {s.GPA}");
+
+      var cohortAssessments = new IGradable[]
+      {
+        new Quiz { Title = "C#Basics", CorrectAnswers = 18, TotalQuestions = 20 },
+        new Labassignment{ Title = "Registration API", FunctionalityScore = 90m, CodeQualityScore = 85m }
+      };
+      PrintGradeReport(cohortAssessments);
+    }
+
+    static void PrintGradeReport(IEnumerable<IGradable> assessments)
+    {
+      Console.WriteLine("---Grade Report---");
+      foreach (var item in assessments)
+      {
+        Console.WriteLine($"{item.Title}: {item.CalculateGrade():F2}%");
+      }
     }
   }
 }
