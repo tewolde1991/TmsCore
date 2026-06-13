@@ -261,3 +261,13 @@ foreach (var group in standingGroups)
     Console.WriteLine($"  {s.Name} GPA: {s.GPA}");
   }
 }
+
+// TODO 7: Spread operator (..) 
+string[] backendCourses = ["C#", "ASP.NET Core"];
+string[] frontendCourses = ["TypeScript", "Angular"];
+
+string[] allCourses = [.. backendCourses, .. frontendCourses, "Capstone"];
+//                     ↑               ↑                    ↑
+//                  spread          spread             ተጨማሪ ዋጋ
+
+Console.WriteLine($"\nFull curriculum: {string.Join(", ", allCourses)}");
